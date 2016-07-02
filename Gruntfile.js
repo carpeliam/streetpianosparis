@@ -192,26 +192,6 @@ module.exports = function (grunt) {
       html: ['<%= yeoman.dist %>/{,*/}*.html'],
       css: ['<%= yeoman.dist %>/styles/{,*/}*.css']
     },
-    imagemin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.{png,jpg,jpeg}',
-          dest: '<%= yeoman.dist %>/images'
-        }]
-      }
-    },
-    svgmin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.svg',
-          dest: '<%= yeoman.dist %>/images'
-        }]
-      }
-    },
     cssmin: {
       // This task is pre-configured if you do not wish to use Usemin
       // blocks for your CSS. By default, the Usemin block from your
@@ -275,14 +255,18 @@ module.exports = function (grunt) {
       }
     },
     modernizr: {
-      devFile: '<%= yeoman.app %>/bower_components/modernizr/modernizr.js',
-      outputFile: '<%= yeoman.dist %>/bower_components/modernizr/modernizr.js',
-      files: [
-        '<%= yeoman.dist %>/scripts/{,*/}*.js',
-        '<%= yeoman.dist %>/styles/{,*/}*.css',
-        '!<%= yeoman.dist %>/scripts/vendor/*'
-      ],
-      uglify: true
+      dist: {
+        devFile: '<%= yeoman.app %>/bower_components/modernizr/modernizr.js',
+        outputFile: '<%= yeoman.dist %>/bower_components/modernizr/modernizr.js',
+        files: {
+          src: [
+            '<%= yeoman.dist %>/scripts/{,*/}*.js',
+            '<%= yeoman.dist %>/styles/{,*/}*.css',
+            '!<%= yeoman.dist %>/scripts/vendor/*'
+          ]
+        },
+        uglify: true
+      }
     },
     concurrent: {
       server: [
@@ -295,8 +279,6 @@ module.exports = function (grunt) {
       dist: [
         'compass',
         'copy:styles',
-        'imagemin',
-        'svgmin',
         'htmlmin'
       ]
     },
